@@ -1,0 +1,70 @@
+:root {
+    --padding: 16px;
+    --cell-height: 2.5em;
+}
+
+body {
+    box-sizing: border-box;
+    background-color: #a9a9b0;
+}
+
+.card {
+    width: clamp(300px, 60%, 500px);
+    margin: 48px auto 0 auto;
+    background-color: black;
+    color: white;
+}
+
+.card-header {
+    height: calc((1em + var(--padding)) * 2);
+}
+
+.sofia-sans-semi-condensed-regular {
+    font-family: "Sofia Sans Semi Condensed", serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    font-size: clamp(25px, 3vw, 30px);
+}
+
+.aldrich-regular {
+    font-family: "Aldrich", serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: clamp(18px, 2vw, 25px);
+}
+
+.cell {
+    background-color: #4f4f55;
+    user-select: none;
+}
+
+.cell:hover {
+    border: solid 1px white;
+}
+
+.center {
+    height: var(--cell-height);
+    line-height: var(--cell-height);
+}
+
+.center-equal {
+    height: 100%;
+    line-height: calc(var(--cell-height) * 2);
+}
+
+.ac-bg-color {
+    background-color: #fc0543;
+}
+
+.bg-color-equal {
+    background-color: #8383d6;
+}
+
+.operators {
+    background-color: #838383;
+}
+
+#expression {
+    color: orangered;
+}
