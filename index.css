@@ -1,6 +1,7 @@
 :root {
     --padding: 16px;
     --cell-height: 2.5em;
+    --translate-size: 20px;
 }
 
 body {
@@ -8,9 +9,12 @@ body {
     background-color: #a9a9b0;
 }
 
-.card {
+.card-container {
     width: clamp(300px, 60%, 500px);
     margin: 48px auto 0 auto;
+}
+
+.card {
     background-color: black;
     color: white;
 }
@@ -67,4 +71,42 @@ body {
 
 #expression {
     color: orangered;
+}
+
+#history-screen {
+    width: 100%;
+    height: 100%;
+    background-color: #131c22;
+    transform: translateX(var(--translate-size));
+}
+
+#history-screen p {
+    color: #0047ab;
+    user-select: none;
+}
+
+#grab-area {
+    z-index: 1;
+    width: 20px;
+    height: 100%;
+    cursor: grab;
+    background-color: #3389cc;
+}
+
+.outline-btn {
+    border-radius: 2px;
+    background-color: transparent;
+    color: red;
+    border: 1px solid red;
+    font-size: medium !important;
+    user-select: none;
+}
+
+#expressions {
+    scrollbar-width: none;
+    font-size: 21px;
+}
+
+.backspace-bg-color {
+    background-color: #db9d00;
 }
