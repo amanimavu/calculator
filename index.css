@@ -57,11 +57,11 @@ body {
     line-height: calc(var(--cell-height) * 2);
 }
 
-.ac-bg-color {
+#clear {
     background-color: #fc0543;
 }
 
-.bg-color-equal {
+#equals {
     background-color: #8383d6;
 }
 
@@ -109,4 +109,8 @@ body {
 
 .backspace-bg-color {
     background-color: #db9d00;
+}
+
+#history-modal .modal-content {
+    background-color: #131c22;
 }

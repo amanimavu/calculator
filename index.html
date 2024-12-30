@@ -65,7 +65,8 @@
                             <div class="col">
                                 <div
                                     data-code="99"
-                                    class="cell center ac-bg-color"
+                                    class="cell center"
+                                    id="clear"
                                 >
                                     AC
                                 </div>
@@ -94,6 +95,7 @@
                             </div>
                             <div class="col">
                                 <div
+                                    id="divide"
                                     data-code="47"
                                     class="cell center operators"
                                 >
@@ -102,6 +104,7 @@
                             </div>
                             <div class="col">
                                 <div
+                                    id="multiply"
                                     data-code="120"
                                     class="cell center operators"
                                 >
@@ -120,6 +123,7 @@
                             </div>
                             <div class="col">
                                 <div
+                                    id="subtract"
                                     data-code="45"
                                     class="cell center operators"
                                 >
@@ -148,27 +152,47 @@
                             <div class="col-9">
                                 <div class="row row-cols-3 g-1">
                                     <div class="col">
-                                        <div data-code="49" class="cell center">
+                                        <div
+                                            data-code="49"
+                                            class="cell center"
+                                            id="one"
+                                        >
                                             1
                                         </div>
                                     </div>
                                     <div class="col">
-                                        <div data-code="50" class="cell center">
+                                        <div
+                                            data-code="50"
+                                            class="cell center"
+                                            id="two"
+                                        >
                                             2
                                         </div>
                                     </div>
                                     <div class="col">
-                                        <div data-code="51" class="cell center">
+                                        <div
+                                            data-code="51"
+                                            class="cell center"
+                                            id="three"
+                                        >
                                             3
                                         </div>
                                     </div>
                                     <div class="col-8">
-                                        <div data-code="48" class="cell center">
+                                        <div
+                                            data-code="48"
+                                            class="cell center"
+                                            id="zero"
+                                        >
                                             0
                                         </div>
                                     </div>
                                     <div class="col">
-                                        <div data-code="46" class="cell center">
+                                        <div
+                                            data-code="46"
+                                            class="cell center"
+                                            id="decimal"
+                                        >
                                             .
                                         </div>
                                     </div>
@@ -176,8 +200,9 @@
                             </div>
                             <div class="col-3">
                                 <div
+                                    id="equals"
                                     data-code="13"
-                                    class="cell center-equal bg-color-equal"
+                                    class="cell center-equal"
                                 >
                                     =
                                 </div>
@@ -217,6 +242,64 @@
                         id="grab-area"
                         class="position-fixed end-0 top-0"
                     ></div>
+                </div>
+            </div>
+
+            <div class="container-fluid text-center p-3">
+                <button
+                    data-bs-toggle="modal"
+                    data-bs-target="#history-modal"
+                    type="button"
+                    tabindex="-1"
+                    class="btn btn-light sofia-sans-semi-condensed-regular d-xl-none"
+                    style="font-size: large"
+                >
+                    HISTORY
+                </button>
+            </div>
+        </div>
+        <!-- Modal -->
+        <div
+            class="modal fade"
+            id="history-modal"
+            tabindex="-1"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true"
+        >
+            <div class="modal-dialog modal-fullscreen">
+                <div class="modal-content text-light">
+                    <div class="modal-header">
+                        <h1
+                            class="modal-title sofia-sans-semi-condensed-regular"
+                            id="exampleModalLabel"
+                        >
+                            Computation history
+                        </h1>
+                        <div class="d-inline ms-auto" data-bs-theme="dark">
+                            <button
+                                type="button"
+                                class="btn-close sofia-sans-semi-condensed-regular"
+                                data-bs-dismiss="modal"
+                                aria-label="Close"
+                            ></button>
+                        </div>
+                    </div>
+                    <div class="modal-body aldrich-regular text-light"></div>
+                    <div class="modal-footer">
+                        <button
+                            id="clear"
+                            type="button"
+                            class="btn btn-outline-danger sofia-sans-semi-condensed-regular"
+                            style="
+                                border-radius: 2px;
+                                padding-top: 3px;
+                                padding-bottom: 3px;
+                                font-size: large;
+                            "
+                        >
+                            clear
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>

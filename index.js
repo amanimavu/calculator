@@ -2,13 +2,13 @@ const cells = document.getElementsByClassName("cell");
 const inputDisplay = document.getElementById("input");
 const expressionDisplay = document.getElementById("expression");
 const history = document.querySelector("#history-screen p");
+const historyModal = document.querySelector("#history-modal .modal-body");
 const sound = document.getElementById("sound");
 let resultArray = [];
 const maxHistory = 10;
 const operators = ["+", "-", "x", "/"];
 
 const calculate = (expression) => {
-    console.log(expression);
     expression = expression.split(" ");
     console.log(expression);
 
@@ -58,7 +58,7 @@ const calculate = (expression) => {
             default:
                 break;
         }
-        // console.log([...expression].toSpliced(start, 3, evaluation));
+        console.log([...expression].toSpliced(start, 3, evaluation));
 
         expression = [...expression].toSpliced(start, 3, evaluation);
     });
@@ -98,7 +98,9 @@ function handleClick() {
             break;
         case "=":
             if (!expression.includes("=")) {
-                let [result] = calculate(expression);
+                let [result] = calculate(
+                    expression.replace(/\+\s-(?=\d+)/, "- ")
+                );
                 if (!Number.isInteger(parseFloat(result))) {
                     result = parseFloat(result).toFixed(2);
                 }
@@ -110,6 +112,7 @@ function handleClick() {
                     return prev + "\n---------------\n" + current;
                 });
                 history.innerText = expressions;
+                historyModal.innerText = expressions;
 
                 if (resultArray.length === maxHistory) {
                     resultArray = resultArray.slice(0, maxHistory - 1);
@@ -120,28 +123,24 @@ function handleClick() {
             erase();
             break;
         default:
-            if (
-                [
-                    "1",
-                    "2",
-                    "3",
-                    "4",
-                    "5",
-                    "6",
-                    "7",
-                    "8",
-                    "9",
-                    "0",
-                    "-",
-                    ".",
-                ].includes(expression.at(-1)) &&
-                !["+", "-", "x", "/"].includes(input) &&
-                !expression.includes("=")
-            ) {
-                inputDisplay.textContent += input;
+            //populate input display
+            if (!expression.includes("=")) {
+                if (
+                    ["+", "-", "x", "/"].includes(input) ||
+                    (["+", "-", "x", "/"].includes(expression.at(-1)) &&
+                        ![undefined, "+", "-", "x", "/"].includes(
+                            expression.at(-3)
+                        ))
+                )
+                    inputDisplay.textContent = input;
+                else {
+                    inputDisplay.textContent += input;
+                }
             } else {
                 inputDisplay.textContent = input;
             }
+
+            //populate the expression display
             if (!expression.includes("=")) {
                 if (
                     ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"].includes(
@@ -215,9 +214,11 @@ $(document).ready(function () {
         }
     });
 
-    $("#clear").on("click", () => {
+    $(".btn-outline-danger").on("click", () => {
+        // console.log("clear");
         resultArray = [];
         history.innerText = "";
+        historyModal.innerText = "";
     });
 
     $(this).on("keypress", (event) => {
@@ -232,7 +233,6 @@ $(document).ready(function () {
     });
 
     $(this).on("keydown", (event) => {
-        console.log(event.which);
         const keyCode = event.which;
         if (keyCode === 39) {
             $("html").attr("style", `--translate-size: ${maxWidth}px`);
