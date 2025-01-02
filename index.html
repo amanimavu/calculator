@@ -53,10 +53,12 @@
                             class="m-0 text-nowrap"
                         ></p>
                         <p
-                            id="input"
+                            id="display"
                             style="overflow-x: auto; scrollbar-width: none"
                             class="m-0 text-nowrap"
-                        ></p>
+                        >
+                            0
+                        </p>
                     </div>
                     <div
                         class="card-body sofia-sans-semi-condensed-regular p-1"
@@ -113,13 +115,31 @@
                             </div>
 
                             <div class="col">
-                                <div data-code="55" class="cell center">7</div>
+                                <div
+                                    id="seven"
+                                    data-code="55"
+                                    class="cell center"
+                                >
+                                    7
+                                </div>
                             </div>
                             <div class="col">
-                                <div data-code="56" class="cell center">8</div>
+                                <div
+                                    id="eight"
+                                    data-code="56"
+                                    class="cell center"
+                                >
+                                    8
+                                </div>
                             </div>
                             <div class="col">
-                                <div data-code="57" class="cell center">9</div>
+                                <div
+                                    id="nine"
+                                    data-code="57"
+                                    class="cell center"
+                                >
+                                    9
+                                </div>
                             </div>
                             <div class="col">
                                 <div
@@ -132,16 +152,35 @@
                             </div>
 
                             <div class="col">
-                                <div data-code="52" class="cell center">4</div>
-                            </div>
-                            <div class="col">
-                                <div data-code="53" class="cell center">5</div>
-                            </div>
-                            <div class="col">
-                                <div data-code="54" class="cell center">6</div>
+                                <div
+                                    id="four"
+                                    data-code="52"
+                                    class="cell center"
+                                >
+                                    4
+                                </div>
                             </div>
                             <div class="col">
                                 <div
+                                    id="five"
+                                    data-code="53"
+                                    class="cell center"
+                                >
+                                    5
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div
+                                    id="six"
+                                    data-code="54"
+                                    class="cell center"
+                                >
+                                    6
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div
+                                    id="add"
                                     data-code="43"
                                     class="cell center operators"
                                 >
@@ -224,7 +263,7 @@
                         ></p>
                         <div class="d-flex justify-content-end px-1">
                             <button
-                                id="clear"
+                                id="clear-history"
                                 type="button"
                                 class="btn btn-outline-danger"
                                 style="
@@ -287,7 +326,7 @@
                     <div class="modal-body aldrich-regular text-light"></div>
                     <div class="modal-footer">
                         <button
-                            id="clear"
+                            id="clear-history"
                             type="button"
                             class="btn btn-outline-danger sofia-sans-semi-condensed-regular"
                             style="
@@ -309,5 +348,6 @@
             crossorigin="anonymous"
         ></script>
         <script src="index.js"></script>
+        <script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"></script>
     </body>
 </html>
