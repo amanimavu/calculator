@@ -1,5 +1,5 @@
 const cells = document.getElementsByClassName("cell");
-const inputDisplay = document.getElementById("input");
+const inputDisplay = document.getElementById("display");
 const expressionDisplay = document.getElementById("expression");
 const history = document.querySelector("#history-screen p");
 const historyModal = document.querySelector("#history-modal .modal-body");
@@ -7,19 +7,19 @@ const sound = document.getElementById("sound");
 let resultArray = [];
 const maxHistory = 10;
 const operators = ["+", "-", "x", "/"];
+const digits = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"];
+
+const parse = (expression) => {
+    const reg =
+        /^-?(?:\d+(?:\.(?=\d+)\d+)?)(?:(?:\s[+\-\/x]\s)-?(?:\d+(?:\.(?=\d+)\d+)?))*/;
+    return expression.match(reg)[0];
+};
 
 const calculate = (expression) => {
-    expression = expression.split(" ");
-    console.log(expression);
+    expression = expression.replace(/\+\s-(?=\d+)/, "- ").split(" ");
+    console.info(`%c[TRACK]:`, "color: #1591ea; font-weight: bold", expression);
 
-    // const x = [...expression].toSpliced(0, 3, expression[0] * expression[2])
-    // expression = x
-    // const y = [...expression].toSpliced(2, 5, expression[2] * expression[4])
-    // expression = y
-    // const z = [...expression].toSpliced(0, 3, expression[0] + expression[2])
-    // console.log(x, y, z)
-
-    const priority = { x: 5, "/": 6, "+": 4, "-": 3 };
+    const priority = { x: 5, "/": 6, "+": 3, "-": 4 };
     const operators = expression.filter((item) =>
         Object.keys(priority).includes(item)
     );
@@ -58,7 +58,7 @@ const calculate = (expression) => {
             default:
                 break;
         }
-        console.log([...expression].toSpliced(start, 3, evaluation));
+        //console.log([...expression].toSpliced(start, 3, evaluation));
 
         expression = [...expression].toSpliced(start, 3, evaluation);
     });
@@ -66,7 +66,7 @@ const calculate = (expression) => {
 };
 
 const erase = () => {
-    inputDisplay.textContent = "";
+    inputDisplay.textContent = "0";
     expressionDisplay.textContent = "";
 };
 
@@ -80,7 +80,7 @@ function handleClick() {
         case "":
             const inputText = inputDisplay.innerText;
             const inputAfterErase = inputText.slice(0, inputText.length - 1);
-            inputDisplay.innerText = inputAfterErase || "\n";
+            inputDisplay.innerText = inputAfterErase || "0";
 
             let expressionAfterErase;
             if (operators.includes(expression.at(-2))) {
@@ -98,11 +98,14 @@ function handleClick() {
             break;
         case "=":
             if (!expression.includes("=")) {
-                let [result] = calculate(
-                    expression.replace(/\+\s-(?=\d+)/, "- ")
-                );
+                const newExpression = parse(expression);
+                expressionDisplay.textContent = newExpression;
+                let [result] = calculate(newExpression);
                 if (!Number.isInteger(parseFloat(result))) {
-                    result = parseFloat(result).toFixed(2);
+                    result = new Intl.NumberFormat("en-US", {
+                        style: "decimal",
+                        maximumFractionDigits: 4,
+                    }).format(parseFloat(result));
                 }
                 inputDisplay.textContent = result;
                 expressionDisplay.textContent += ` = ${result}`;
@@ -134,7 +137,16 @@ function handleClick() {
                 )
                     inputDisplay.textContent = input;
                 else {
-                    inputDisplay.textContent += input;
+                    const prevInput = inputDisplay.textContent.trim();
+
+                    if (prevInput.includes(".") && input === ".") {
+                        return;
+                    }
+
+                    inputDisplay.textContent = (prevInput + input).replace(
+                        /^0(?=\d)/,
+                        ""
+                    );
                 }
             } else {
                 inputDisplay.textContent = input;
@@ -142,14 +154,31 @@ function handleClick() {
 
             //populate the expression display
             if (!expression.includes("=")) {
+                const prevExpression = expressionDisplay.textContent;
                 if (
-                    ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"].includes(
-                        expression.at(-1)
-                    ) &&
-                    ["+", "-", "x", "/"].includes(input)
-                )
-                    expressionDisplay.textContent += ` ${input} `;
-                else expressionDisplay.textContent += input;
+                    digits.includes(expression.at(-1)) &&
+                    operators.includes(input)
+                ) {
+                    expressionDisplay.textContent =
+                        prevExpression + ` ${input} `;
+                } else if (
+                    (operators.includes(expression.at(-1)) ||
+                        expression.slice(-3) === "- -") &&
+                    ["+", "x", "/"].includes(input)
+                ) {
+                    expressionDisplay.textContent = expression.replace(
+                        /(?<=\s).+$/,
+                        `${input} `
+                    );
+                } else {
+                    if (expression.slice(-3) === "- -" && input === "-") {
+                        return;
+                    }
+
+                    expressionDisplay.textContent = (
+                        prevExpression + input
+                    ).replace(/\b0/, "");
+                }
             } else {
                 if (["+", "-", "x", "/"].includes(input)) {
                     const [prevResult] = expression.match(
@@ -215,7 +244,6 @@ $(document).ready(function () {
     });
 
     $(".btn-outline-danger").on("click", () => {
-        // console.log("clear");
         resultArray = [];
         history.innerText = "";
         historyModal.innerText = "";
@@ -246,7 +274,7 @@ $(document).ready(function () {
         }
 
         if (keyCode === 46) {
-            $("#clear").trigger("click");
+            $("#clear-history").trigger("click");
         }
     });
 });
